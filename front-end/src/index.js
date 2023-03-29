@@ -2,12 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import RootProvider from './context/RootProvider';
 import App from './App';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <RootProvider>
+      <App />
+    </RootProvider>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
 
