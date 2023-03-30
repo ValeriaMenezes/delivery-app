@@ -1,16 +1,22 @@
 import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
-// import rockGlass from './images/rockGlass.svg';
-import { Route, Switch } from 'react-router-dom';
-import sellerOrders from './Pages/sellerOrders';
+import FormProvider from './context/FormProvider';
+import Login from './pages/Login';
 
 function App() {
   return (
-    <div>
-      <Switch>
-        <Route exact path="/seller/orders" component={ sellerOrders } />
-      </Switch>
-    </div>
+    <main className="App">
+      <Route exact path="/">
+        <Redirect to="/login" />
+      </Route>
+      <FormProvider>
+        <Switch>
+          <Route exact path="/login" component={ Login } />
+          <Route exact path="/seller/orders" component={ sellerOrders } />
+        </Switch>
+      </FormProvider>
+    </main>
   );
 }
 
