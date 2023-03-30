@@ -1,29 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SellerCard({ index, request, endereco, data, value }) {
+function SellerCard({
+  sellerID,
+  status,
+  deliveryAdress,
+  deliveryNumber,
+  saleData,
+  totalPrice,
+}) {
   return (
     <div
-      data-testid={ `customer_products__element-order-date-${index}` }
+      data-testid={ `customer_products__element-order-date-${sellerID}` }
     >
       <h4>Pedido</h4>
-      <h2>{`${index}`}</h2>
+      <h2>{`${sellerID}`}</h2>
       <div>
-        <h1>{ request }</h1>
+        <h1>{ status }</h1>
       </div>
-      <h1>{ data }</h1>
-      <h1>{ value }</h1>
-      <p>{ endereco }</p>
+      <h1>{ saleData }</h1>
+      <h1>{ totalPrice }</h1>
+      <p>{ `${deliveryAdress}, ${deliveryNumber}` }</p>
     </div>
   );
 }
 
 SellerCard.propTypes = {
-  index: PropTypes.number,
-  request: PropTypes.string,
-  endereco: PropTypes.string,
+  sellerID: PropTypes.number,
+  status: PropTypes.string,
+  deliveryAdress: PropTypes.string,
   data: PropTypes.string,
-  value: PropTypes.number,
+  totalPrice: PropTypes.number,
 }.isRequired;
 
 export default SellerCard;
