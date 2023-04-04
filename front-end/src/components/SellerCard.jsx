@@ -14,7 +14,7 @@ function SellerCard({
       data-testid={ `customer_products__element-order-date-${sellerID}` }
     >
       <h4>Pedido</h4>
-      <h2>{`${sellerID}`}</h2>
+      <h2>{sellerID}</h2>
       <div>
         <h1>{ status }</h1>
       </div>

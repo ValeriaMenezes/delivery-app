@@ -7,6 +7,7 @@ import RootProvider from './context/RootProvider';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
+import sellerOrders from './pages/SellerOrders';
 
 function App() {
   return (

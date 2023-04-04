@@ -1,23 +1,35 @@
 import React, { createContext, Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
-const loginContext = createContext();
+const SellerContext = createContext();
 
 class SellerOrdersProvider extends Component {
   constructor() {
     super();
     this.state = {
-      helloworld: 0,
+      data: [],
     };
   }
 
   render() {
-    const { Provider } = loginContext;
+    const { Provider } = SellerContext;
     const { children } = this.props;
+    const getAllSellers = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/seller/orders');
+        const sellers = response.data;
+        console.log(sellers);
+        console.log(sellers);
+        return sellers;
+      } catch (error) {
+        console.error(error);
+      }
+    };
     return (
       <Provider
         value={ {
-          ...this.state,
+          ...this.state, getAllSellers,
         } }
       >
         {children}
@@ -31,3 +43,4 @@ SellerOrdersProvider.propTypes = {
 }.isRequired;
 
 export default SellerOrdersProvider;
+export { SellerContext };
