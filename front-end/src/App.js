@@ -5,6 +5,7 @@ import './App.css';
 // import FormProvider from './context/FormProvider';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Checkout from './pages/Checkout';
 import Admin from './pages/Admin';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ Register } />
         <Route exact path="/customer/products" component={ Products } />
+        <Route exact path="/customer/checkout" component={ Checkout } />
         <Route exact path="/admin/manage" component={ Admin } />
       </Switch>
     </main>
