@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Products from './pages/Products';
+import CustomerOrder from './pages/CustomerOrder';
 import './App.css';
 // import FormProvider from './context/FormProvider';
 import Login from './pages/Login';
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ Register } />
         <Route exact path="/customer/products" component={ Products } />
+        <Route exact path="/customer/orders" component={ CustomerOrder } />
         <Route exact path="/customer/checkout" component={ Checkout } />
         <Route exact path="/admin/manage" component={ Admin } />
       </Switch>
