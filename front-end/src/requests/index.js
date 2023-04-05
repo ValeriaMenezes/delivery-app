@@ -20,4 +20,18 @@ const fetchProducts = async () => {
   return data;
 };
 
+const fetchSales = async (id) => {
+  const response = await fetch(
+    `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/orders/details/${id}`,
+    {
+      method: 'GET',
+    },
+  );
+  // console.log('response', response);
+  const data = await response.json();
+  console.log('data', data);
+  return data;
+};
+
 export default fetchProducts;
+export { fetchSales };
