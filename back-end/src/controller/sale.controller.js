@@ -42,8 +42,8 @@ const getSeller = async (req, res) => {
 
 const update = async (req, res) => {
   const { saleId } = req.params;
-  const { status } = req.body;
-  const { type, message } = await saleService.update(saleId, status);
+  const { newStatus } = req.body;
+  const { type, message } = await saleService.update(saleId, newStatus);
   if (type) return res.status(type).json(message);
   return res.status(202).json(message);
 };

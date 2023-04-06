@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { fetchSales, fetchUpdateStatusSale } from '../requests/index';
 
 function OrderDetails() {
-  const [orderDetails, setOrderDetails] = useState({ seller: {}});
+  const [orderDetails, setOrderDetails] = useState({ seller: {} });
   const [items, setItems] = useState([]);
   // const [date, setDate] = useState('');
   const [statusSale, setStatusSale] = useState('');
@@ -21,12 +21,12 @@ function OrderDetails() {
     // const dateFromDB = orderDetails.saleDate;
     const dateFormat = new Date(date).toLocaleString('pt-BR');
     return dateFormat;
-  }
+  };
 
-  const handleStatus = async (status) => {
-    const response = await fetchUpdateStatusSale(id, status);
+  const handleStatus = async (newStatus) => {
+    const response = await fetchUpdateStatusSale(id, newStatus);
     setStatusSale(response);
-  }
+  };
 
   useEffect(() => {
     getSales();
@@ -61,7 +61,7 @@ function OrderDetails() {
         type="button"
         data-testid="customer_order_details__button-delivery-check"
         disabled
-        onClick={ () => handleStatus('Entregue')}
+        onClick={ () => handleStatus('Entregue') }
       >
         MARCAR COMO ENTREGUE
       </button>
@@ -74,35 +74,47 @@ function OrderDetails() {
           <th>Sub-total</th>
         </thead>
         <tbody>
-          {items.map(({id, name, price, SalesProducts: { quantity }}, index) => (
-            <tr key={ id }>
-              <td
-              data-testid={`customer_order_details__element-order-table-item-number-${index}`}
-              >
-                {id}
-              </td>
-              <td
-                data-testid={`customer_order_details__element-order-table-name-${index}`}
-              >
-                {name}
-              </td>
-              <td
-                data-testid={`customer_order_details__element-order-table-quantity-${index}`}
-              >
-                {quantity}
-              </td>
-              <td
-                data-testid={`customer_order_details__element-order-table-unit-price-${index}`}
-              >
-                {price}
-              </td>
-              <td
-                data-testid={`customer_order_details__element-order-table-sub-total-${index}`}
-              >
-                {price * quantity}
-              </td>
-            </tr>
-          ))}
+          { items.map(
+            ({ id: saleId, name, price, SalesProducts: { quantity } }, index) => (
+              <tr key={ saleId }>
+                <td
+                  data-testid={
+                    `customer_order_details__element-order-table-item-number-${index}`
+                  }
+                >
+                  {saleId}
+                </td>
+                <td
+                  data-testid={
+                    `customer_order_details__element-order-table-name-${index}`
+                  }
+                >
+                  {name}
+                </td>
+                <td
+                  data-testid={
+                    `customer_order_details__element-order-table-quantity-${index}`
+                  }
+                >
+                  {quantity}
+                </td>
+                <td
+                  data-testid={
+                    `customer_order_details__element-order-table-unit-price-${index}`
+                  }
+                >
+                  {price}
+                </td>
+                <td
+                  data-testid={
+                    `customer_order_details__element-order-table-sub-total-${index}`
+                  }
+                >
+                  {price * quantity}
+                </td>
+              </tr>
+            ),
+          )}
         </tbody>
       </table>
       <span

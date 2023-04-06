@@ -78,13 +78,13 @@ const getSeller = async (sellerId) => {
   }
 };
 
-const update = async (saleId, status) => {
+const update = async (saleId, newStatus) => {
   const allStatus = ['Pendente', 'Preparando', 'Em Trânsito', 'Entregue'];
-  if (!allStatus.includes(status)) {
+  if (!allStatus.includes(newStatus)) {
     return { type: statusCode.INVALID_VALUE, message: 'Invalid status' };
   }
   try {
-    await Sales.update({ status: status }, {
+    await Sales.update({ status: newStatus }, {
       where: { id: saleId },
     });
     return { message: 'Status updated' };
