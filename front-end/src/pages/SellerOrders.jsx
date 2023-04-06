@@ -1,35 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import SellerCard from '../components/SellerCard';
+import OrdersCard from '../components/OrdersCard';
+import NavBar from '../components/NavBar';
 
 function SellerOrders() {
-  const [sellers, setSellers] = useState([]);
+  const [Orders, setOrders] = useState([]);
 
-  const getAllSellers = async () => {
+  const getAllOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/seller/orders');
-      const sellers2 = response.data;
-      setSellers(sellers2);
+      const api = axios.create({
+        baseURL: 'http://localhost:3001',
+      });
+      const { id } = JSON.parse(localStorage.getItem('user')) || '';
+      const { data } = await api.get(`/sales/seller/${id}`);
+      console.log('AQUI!!!!', data);
+      setOrders(data);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    getAllSellers();
+    getAllOrders();
   }, []);
 
   return (
     <div>
-      {sellers.map((seller) => (
-        <SellerCard
-          key={ seller.sellerID }
-          sellerID={ seller.sellerID }
-          status={ seller.status }
-          deliveryAdress={ seller.deliveryAdress }
-          deliveryNumber={ seller.deliveryNumber }
-          saleData={ seller.saleData }
-          totalPrice={ seller.totalPrice }
+      <NavBar />
+      {Orders.map((sale, index) => (
+        <OrdersCard
+          key={ index }
+          index={ index }
+          status={ sale.status }
+          deliveryAddress={ sale.deliveryAddress }
+          deliveryNumber={ sale.deliveryNumber }
+          saleDate={ sale.saleDate }
+          totalPrice={ sale.totalPrice }
         />
       ))}
     </div>
