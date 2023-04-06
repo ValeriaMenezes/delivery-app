@@ -1,25 +1,36 @@
-import React, { useContext, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
-// import { ProductsContext } from '../context/ProductsProvider';
-// import { fetchSales } from '../requests/index';
+import { fetchSales, fetchUpdateStatusSale } from '../requests/index';
 
 function OrderDetails() {
-  // const { userInfo, setUserInfo } = useContext(ProductsContext);
-  // const { role } = userInfo;
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [items, setItems] = useState([]);
+  // const [date, setDate] = useState('');
 
-  // const { id } = useParams();
+  const { id } = useParams();
 
-  // useEffect(() => {
-  //   const getSales = async () => {
-  //     const response = await fetchSales(id);
-  //     // aqui deve ser verificado o que é retornado do db quando a tela de checkout estiver pronta
-  //     return response;
-  //   };
+  const getSales = async () => {
+    const response = await fetchSales(id);
+    setOrderDetails(response);
+    setItems(response.products);
+  };
 
-  //   getSales();
-  // }, []);
+  const formatDate = (date) => {
+    // const dateFromDB = orderDetails.saleDate;
+    const dateFormat = new Date(date).toLocaleString('pt-BR');
+    return dateFormat;
+  }
+
+  const handleStatus = async (newStatus) => {
+    const response = await fetchUpdateStatusSale(id, newStatus);
+    console.log('response', response);
+  }
+
+  useEffect(() => {
+    getSales();
+    handleStatus();
+  }, []);
 
   return (
     <div>
@@ -28,74 +39,75 @@ function OrderDetails() {
       <span
         data-testid="customer_order_details__element-order-details-label-order-id"
       >
-        Pedido 0003
+        {`Pedido ${`000${id}`}`}
       </span>
       <span
         data-testid="customer_order_details__element-order-details-label-seller-name"
       >
-        P. Vend: Fulana Pereira
+        {`P. Vend: ${orderDetails.seller}`}
       </span>
       <span
         data-testid="customer_order_details__element-order-details-label-order-date"
       >
-        07/04/2021
+        {formatDate(orderDetails.saleDate)}
       </span>
       <span
-        data-testid="customer_order_
-          details__element-order-details-label-delivery-status<index>"
+        data-testid={`customer_order_
+          details__element-order-details-label-delivery-status-${orderDetails.id}`}
       >
-        ENTREGUE
+        {`${orderDetails.status}`}
       </span>
       <button
         type="button"
         data-testid="customer_order_details__button-delivery-check"
+        onClick={ () => handleStatus('Entregue')}
       >
         MARCAR COMO ENTREGUE
       </button>
-      <div>
-        <table>
-          <thead>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-          </thead>
-          <tbody>
-            <tr>
+      <table>
+        <thead>
+          <th>Item</th>
+          <th>Descrição</th>
+          <th>Quantidade</th>
+          <th>Valor Unitário</th>
+          <th>Sub-total</th>
+        </thead>
+        <tbody>
+          {items.map(({id, name, price, SalesProducts: { quantity }}, index) => (
+            <tr key={ id }>
               <td
-                data-testid="customer_order_details__element-order-table-item-number-<index>"
+              data-testid={`customer_order_details__element-order-table-item-number-${index}`}
               >
-                {/* { index + 1} */}
+                {id}
               </td>
               <td
-                data-testid="customer_order_details__element-order-table-name-<index>"
+                data-testid={`customer_order_details__element-order-table-name-${index}`}
               >
-                {/* { name } */}
+                {name}
               </td>
               <td
-                data-testid="customer_order_details__element-order-table-quantity-<index>"
+                data-testid={`customer_order_details__element-order-table-quantity-${index}`}
               >
-                {/* { quantity } */}
+                {quantity}
               </td>
               <td
-                data-testid="customer_order_details__element-order-table-unit-price-<index>"
+                data-testid={`customer_order_details__element-order-table-unit-price-${index}`}
               >
-                {/* { price } */}
+                {price}
               </td>
               <td
-                data-testid="customer_order_details__element-order-table-sub-total-<index>"
+                data-testid={`customer_order_details__element-order-table-sub-total-${index}`}
               >
-                {/* { price * quantity } */}
+                {price * quantity}
               </td>
             </tr>
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
       <span
         data-testid="customer_order_details__element-order-total-price"
       >
-        Total:
+        {`Total: ${orderDetails.totalPrice}`}
       </span>
     </div>
   );

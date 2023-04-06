@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Products, Sales, SalesProducts, User } = require('../database/models');
+const { Product, Sales, SalesProducts, User } = require('../database/models');
 const config = require('../database/config/config');
 const statusCode = require('../utils/statusCode');
 const { processError } = require('../utils/handleError');
@@ -47,7 +47,7 @@ const getDetails = async (saleId) => {
     const saleDetails = await Sales.findByPk(saleId, {
       include: [
         { model: User, as: 'seller', attributes: ['id', 'name'] }, 
-        { model: Products, as: 'products', through: { attributes: ['quantity'] } },
+        { model: Product, as: 'products', through: { attributes: ['quantity'] } },
       ],
     });
   
