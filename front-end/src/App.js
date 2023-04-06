@@ -28,6 +28,7 @@ function App() {
         <Route exact path="/seller/orders" component={ SellerOrders } />
         <Route exact path="/admin/manage" component={ Admin } />
         <Route exact path="/customer/orders/:id" component={ telaDeDetalhesTemporaria } />
+        <Route exact path="/seller/orders/:id" component={ telaDeDetalhesTemporaria } />
       </Switch>
     </main>
   );

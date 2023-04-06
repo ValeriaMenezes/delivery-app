@@ -31,6 +31,7 @@ function SellerOrders() {
         <OrdersCard
           key={ index }
           index={ index }
+          id={ sale.id }
           status={ sale.status }
           deliveryAddress={ sale.deliveryAddress }
           deliveryNumber={ sale.deliveryNumber }
