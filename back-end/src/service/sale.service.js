@@ -8,20 +8,29 @@ const env = process.env.NODE_ENV || 'development';
 
 const sequelize = new Sequelize(config[env]);
 
+const continueRegister = async (products, t) => {
+  await SalesProducts.bulkCreate(products, { transaction: t });
+};
+
+const newSaleObj = (newSale) => {
+  const { userId, sellerId, deliveryAddress, deliveryNumber, totalPrice } = newSale;
+  return { userId,
+    sellerId,
+    deliveryAddress,
+    deliveryNumber,
+    status: 'Pendente', 
+    totalPrice,
+  };
+};
+
 const register = async (newSale) => {
   const t = await sequelize.transaction();
-  try {
-    const { userId, sellerId, deliveryAddress, deliveryNumber, products, totalPrice } = newSale;
-    const sale = await Sales.create(
-      { userId, sellerId, deliveryAddress, deliveryNumber, status: 'Pendente', totalPrice }, 
-      { transaction: t },
-      );
-      
-    await SalesProducts.bulkCreate(
-      products.map(({ id, quantity }) => ({ quantity, productId: id, saleId: sale.id })), 
-     { transaction: t },
-);
+  try {    
+    const sale = await Sales.create(newSaleObj(newSale), { transaction: t });
+    const newProducts = newSale.products
+      .map(({ id, quantity }) => ({ quantity, productId: id, saleId: sale.id }));  
 
+    await continueRegister(newProducts, t);
     await t.commit();
 
     return { message: sale };
