@@ -1,28 +1,32 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Products from './pages/Products';
+import CustomerOrder from './pages/CustomerOrder';
 import './App.css';
-import RootProvider from './context/RootProvider';
+// import RootProvider from './context/RootProvider';
 // import FormProvider from './context/FormProvider';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
 import sellerOrders from './pages/SellerOrders';
+import Checkout from './pages/Checkout';
+import Admin from './pages/Admin';
 
 function App() {
   return (
     <main className="App">
-      <Route exact path="/">
-        <Redirect to="/login" />
-      </Route>
-      <RootProvider>
-        <Switch>
-          <Route exact path="/login" component={ Login } />
-          <Route exact path="/seller/orders" component={ sellerOrders } />
-          <Route exact path="/register" component={ Register } />
-          <Route exact path="/customer/products" component={ Products } />
-        </Switch>
-      </RootProvider>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
+        <Route exact path="/login" component={ Login } />
+        <Route exact path="/register" component={ Register } />
+        <Route exact path="/customer/products" component={ Products } />
+        <Route exact path="/customer/orders" component={ CustomerOrder } />
+        <Route exact path="/customer/checkout" component={ Checkout } />
+        <Route exact path="/seller/orders" component={ sellerOrders } />
+        <Route exact path="/admin/manage" component={ Admin } />
+      </Switch>
     </main>
   );
 }
