@@ -28,13 +28,17 @@ const fetchSales = async (id) => {
   return data;
 };
 
-const fetchUpdateStatusSale = async (id, newStatus) => {
+const fetchUpdateStatusSale = async (id, status) => {
   console.log('aquii');
   const response = await fetch(
     `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/sales/status/${id}`,
     {
       method: 'PUT',
-      body: JSON.stringify(newStatus),
+      mode: 'cors',
+      body: JSON.stringify({status}),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
   );
   const data = await response.json();

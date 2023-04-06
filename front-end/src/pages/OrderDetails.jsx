@@ -4,9 +4,10 @@ import NavBar from '../components/NavBar';
 import { fetchSales, fetchUpdateStatusSale } from '../requests/index';
 
 function OrderDetails() {
-  const [orderDetails, setOrderDetails] = useState([]);
+  const [orderDetails, setOrderDetails] = useState({ seller: {}});
   const [items, setItems] = useState([]);
   // const [date, setDate] = useState('');
+  const [statusSale, setStatusSale] = useState('');
 
   const { id } = useParams();
 
@@ -22,15 +23,15 @@ function OrderDetails() {
     return dateFormat;
   }
 
-  const handleStatus = async (newStatus) => {
-    const response = await fetchUpdateStatusSale(id, newStatus);
-    console.log('response', response);
+  const handleStatus = async (status) => {
+    const response = await fetchUpdateStatusSale(id, status);
+    setStatusSale(response);
   }
 
   useEffect(() => {
     getSales();
     handleStatus();
-  }, []);
+  }, [statusSale]);
 
   return (
     <div>
@@ -44,7 +45,7 @@ function OrderDetails() {
       <span
         data-testid="customer_order_details__element-order-details-label-seller-name"
       >
-        {`P. Vend: ${orderDetails.seller}`}
+        {`P. Vend: ${orderDetails.seller.name}`}
       </span>
       <span
         data-testid="customer_order_details__element-order-details-label-order-date"
@@ -52,14 +53,14 @@ function OrderDetails() {
         {formatDate(orderDetails.saleDate)}
       </span>
       <span
-        data-testid={`customer_order_
-          details__element-order-details-label-delivery-status-${orderDetails.id}`}
+        data-testid="customer_order_details__element-order-details-label-delivery-status"
       >
         {`${orderDetails.status}`}
       </span>
       <button
         type="button"
         data-testid="customer_order_details__button-delivery-check"
+        disabled
         onClick={ () => handleStatus('Entregue')}
       >
         MARCAR COMO ENTREGUE
@@ -107,7 +108,7 @@ function OrderDetails() {
       <span
         data-testid="customer_order_details__element-order-total-price"
       >
-        {`Total: ${orderDetails.totalPrice}`}
+        {`Total: ${Number(orderDetails.totalPrice).toFixed(2).replace('.', ',')}`}
       </span>
     </div>
   );
