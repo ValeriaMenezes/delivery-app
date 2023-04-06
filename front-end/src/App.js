@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import Admin from './pages/Admin';
+import SellerOrderDetails from './pages/SellerOrderDetails';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/orders" component={ CustomerOrder } />
         <Route exact path="/customer/checkout" component={ Checkout } />
+        <Route exact path="/seller/orders/:id" component={ SellerOrderDetails } />
         <Route exact path="/admin/manage" component={ Admin } />
       </Switch>
     </main>
