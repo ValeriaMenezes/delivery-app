@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import SellerDetailsHead from '../components/DetailsHead';
 import SellerDetailsTable from '../components/DetailsTable';
 import Amount from '../components/Amount';
+import NavBar from '../components/NavBar';
 
 function SellerOrderDetails() {
   const [sale, setSale] = useState(undefined);
@@ -41,6 +42,7 @@ function SellerOrderDetails() {
 
   return (
     <div>
+      <NavBar />
       <section>
         <h2>Detalhe do Pedido</h2>
         {sale && <SellerDetailsHead
