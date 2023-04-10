@@ -5,7 +5,7 @@ function Amount({ sale, dataTestId }) {
   return (
     <h3 data-testid={ dataTestId }>
       {sale.products.reduce((acc, curr) => acc
-      + (curr.price * curr.SalesProducts.quantity), 0)}
+      + (curr.price * curr.SalesProducts.quantity), 0).toFixed(2).replace('.', ',')}
     </h3>
   );
 }
