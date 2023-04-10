@@ -18,17 +18,19 @@ function SellerCard({
   const NUMBER_OITO = 8;
   return (
     <Link to={ `/seller/orders/${id}` }>
-      <div
-        data-testid={ `seller_orders__element-order-id-${id}` }
-      >
+      <div>
         <h4>Pedido</h4>
-        <h2>{index < NUMBER_OITO ? `000${index + 1}` : `00${index + 1}`}</h2>
+        <h2 data-testid={ `seller_orders__element-order-id-${id}` }>
+          {index < NUMBER_OITO ? `000${index + 1}` : `00${index + 1}`}
+        </h2>
         <div>
-          <h1>{status}</h1>
+          <h1 data-testid={ `seller_orders__element-delivery-status-${id}` }>{status}</h1>
         </div>
-        <h1>{dataFormatada}</h1>
-        <h1>{totalPrice}</h1>
-        <p>{`${deliveryAddress}, ${deliveryNumber}`}</p>
+        <h1 data-testid={ `seller_orders__element-order-date-${id}` }>{dataFormatada}</h1>
+        <h1 data-testid={ `seller_orders__element-card-price-${id}` }>{totalPrice}</h1>
+        <p data-testid={ `seller_orders__element-card-address-${id}` }>
+          {`${deliveryAddress}, ${deliveryNumber}`}
+        </p>
       </div>
     </Link>
   );
