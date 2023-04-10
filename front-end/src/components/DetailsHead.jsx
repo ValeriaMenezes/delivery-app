@@ -28,21 +28,36 @@ function DetailsHead({ sale, dataTestId }) {
       >
         { sale.status }
       </h4>
-      <button
-        type="button"
-        data-testid={ dataTestId.preparingButton }
-        onClick={ () => {} }
-      >
-        Prepara pedido
-      </button>
-      <button
-        type="button"
-        data-testid={ dataTestId.dispatchButton }
-        onClick={ () => {} }
-        disabled
-      >
-        Saiu para entrega
-      </button>
+      {pathname.includes('seller') && (
+        <button
+          type="button"
+          data-testid={ dataTestId.preparingButton }
+          onClick={ () => {} }
+        >
+          Prepara pedido
+        </button>
+      )}
+      {pathname.includes('seller') && (
+        <button
+          type="button"
+          data-testid={ dataTestId.dispatchButton }
+          onClick={ () => {} }
+          disabled
+        >
+          Saiu para entrega
+        </button>
+      )}
+      {pathname.includes('customer') && (
+        <button
+          type="button"
+          data-testid={ dataTestId.deliveryCheck }
+          onClick={ () => {} }
+          disabled
+        >
+          Marcar como entregue
+        </button>
+      )}
+
     </section>
   );
 }
