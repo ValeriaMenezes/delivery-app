@@ -8,10 +8,6 @@ function Checkout() {
   const [form, setForm] = useState([]);
   const [sellers, setSellers] = useState([]);
 
-  useEffect(() => {
-    console.log('sellers', sellers);
-  }, [sellers]);
-
   const getSellers = async () => {
     try {
       const api = axios.create({
