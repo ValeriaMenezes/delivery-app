@@ -1,10 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { fetchUpdateStatusSale } from '../requests';
 
 function DetailsHead({ sale, dataTestId }) {
   const { pathname } = useLocation();
+  const { id } = useParams();
+
+  const statusToPreparando = () => {
+    fetchUpdateStatusSale(id, 'Preparando');
+  };
+
+  const statusToEmTransito = () => {
+    fetchUpdateStatusSale(id, 'Em Trânsito');
+  };
+
+  const statusToEntregue = () => {
+    fetchUpdateStatusSale(id, 'Entregue');
+  };
+
   return (
     <section>
       <p
@@ -32,7 +47,8 @@ function DetailsHead({ sale, dataTestId }) {
         <button
           type="button"
           data-testid={ dataTestId.preparingButton }
-          onClick={ () => {} }
+          onClick={ statusToPreparando }
+          disabled={ sale.status !== 'Pendente' }
         >
           Prepara pedido
         </button>
@@ -41,8 +57,8 @@ function DetailsHead({ sale, dataTestId }) {
         <button
           type="button"
           data-testid={ dataTestId.dispatchButton }
-          onClick={ () => {} }
-          disabled
+          onClick={ statusToEmTransito }
+          disabled={ sale.status !== 'Preparando' }
         >
           Saiu para entrega
         </button>
@@ -51,13 +67,12 @@ function DetailsHead({ sale, dataTestId }) {
         <button
           type="button"
           data-testid={ dataTestId.deliveryCheck }
-          onClick={ () => {} }
-          disabled
+          onClick={ statusToEntregue }
+          disabled={ sale.status !== 'Em Trânsito' }
         >
           Marcar como entregue
         </button>
       )}
-
     </section>
   );
 }
