@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useLocation, useParams } from 'react-router-dom';
@@ -6,18 +6,23 @@ import { fetchUpdateStatusSale } from '../requests';
 
 function DetailsHead({ sale, dataTestId }) {
   const { pathname } = useLocation();
+  const [status, setStatus] = useState(sale.status);
   const { id } = useParams();
 
   const statusToPreparando = () => {
     fetchUpdateStatusSale(id, 'Preparando');
+    setStatus('Preparando');
   };
 
   const statusToEmTransito = () => {
-    fetchUpdateStatusSale(id, 'Em Trânsito');
+    const a = 'Em Trânsito';
+    fetchUpdateStatusSale(id, a);
+    setStatus(a);
   };
 
   const statusToEntregue = () => {
     fetchUpdateStatusSale(id, 'Entregue');
+    setStatus('Entregue');
   };
 
   return (
@@ -41,14 +46,14 @@ function DetailsHead({ sale, dataTestId }) {
       <h4
         data-testid={ dataTestId.status }
       >
-        { sale.status }
+        { status }
       </h4>
       {pathname.includes('seller') && (
         <button
           type="button"
           data-testid={ dataTestId.preparingButton }
           onClick={ statusToPreparando }
-          disabled={ sale.status !== 'Pendente' }
+          disabled={ status !== 'Pendente' }
         >
           Prepara pedido
         </button>
@@ -58,7 +63,7 @@ function DetailsHead({ sale, dataTestId }) {
           type="button"
           data-testid={ dataTestId.dispatchButton }
           onClick={ statusToEmTransito }
-          disabled={ sale.status !== 'Preparando' }
+          disabled={ status !== 'Preparando' }
         >
           Saiu para entrega
         </button>
@@ -68,7 +73,7 @@ function DetailsHead({ sale, dataTestId }) {
           type="button"
           data-testid={ dataTestId.deliveryCheck }
           onClick={ statusToEntregue }
-          disabled={ sale.status !== 'Em Trânsito' }
+          disabled={ status !== 'Em Trânsito' }
         >
           Marcar como entregue
         </button>
