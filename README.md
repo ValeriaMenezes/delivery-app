@@ -10,7 +10,7 @@ Essa aplicação foi desenvolvida pelos seguintes integrantes do grupo: _**[Shei
 [Valéria Menezes](https://github.com/ValeriaMenezes),
 [Mael Fernandes](https://github.com/Malrus-dev),
 [Henrique Rocha](https://github.com/rocha-henrique)
-e Matheus Bora**_
+e [Matheus Bora](https://www.linkedin.com/in/matheus-bora-603690268/)**_
 
 ## Tecnologias
 
