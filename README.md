@@ -1,5 +1,3 @@
-<!-- # :construction: README customizado em construção ! :construction: -->
-
 # Projeto Delivery App
 
 ## Objetivo do Projeto
